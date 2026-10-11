@@ -3,6 +3,9 @@ U=user
 
 OBJS = \
   $K/entry.o \
+  $K/sched_cfs.o \
+  $K/sched_mlfq.o \
+  $K/sched_rr.o \
   $K/start.o \
   $K/console.o \
   $K/printk.o \
@@ -131,6 +134,7 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 
 UPROGS=\
 	$U/_cat\
+        $U/_schedtest\
 	$U/_echo\
 	$U/_forktest\
 	$U/_grep\

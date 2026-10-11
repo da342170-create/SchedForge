@@ -110,3 +110,23 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// Dynamic scheduler policy switch syscall
+extern struct sched_ops rr_ops;
+extern struct sched_ops mlfq_ops;
+extern struct sched_ops cfs_ops;
+
+uint64
+sys_setscheduler(void)
+{
+  int id;
+  argint(0, &id);
+
+  if(id == 0) current_sched = &rr_ops;
+  else if(id == 1) current_sched = &mlfq_ops;
+  else if(id == 2) current_sched = &cfs_ops;
+  else return -1;
+
+  current_sched->init();
+  return 0;
+}
